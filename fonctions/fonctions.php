@@ -1,5 +1,4 @@
 <?php
-define("CONFERENCES", "db/confs.json");
 
 function connected(){
 	return (isset($_SESSION['id']));
@@ -98,7 +97,7 @@ function manageConnect($data){
 
 
 function export($array){
-	$file =fopen(CONFERENCES, 'w');
+	$file =fopen("./db/confs.json", 'w');
 	$data = json_encode($array, FILE_USE_INCLUDE_PATH);
 
 	fwrite($file, $data);
@@ -134,7 +133,7 @@ function addConf($data){
 
 	$when = Date ($date . " ". $hour);
 
-	$confs = getJSON(CONFERENCES);
+	$confs = getJSON("./db/confs.json");
 
 	$id = getId($confs);
 
@@ -152,22 +151,44 @@ function addConf($data){
 	export($confs);
 }
 
-function loadConf($id)
-{
-	$confs = getJSON(CONFERENCES);
+function searchIndex($array, $id){
+	$i = 0;
+	$length = count($array);
 	$result = NULL;
 
-	$i = 0;
-	$length = count($confs);
-
-	while ($i < $length && $confs[$i]['index'] != $id){
+	while ($i < $length && $array[$i]['index'] != $id){
 		$i++;
 	}
 
 	if($i < $length){
-		$result = $confs[$i];
+		$result = $i;
 	}
 
 	return $result;
 }
 
+function loadConf($id)
+{
+	$confs = getJSON("./db/confs.json");
+	$index = searchIndex($confs, $id);
+
+	$result = NULL;
+
+	if($index){
+		$result = $confs[$index];
+	}
+
+	return $result;
+}
+
+function editConf($id, $data){
+	deleteConf($id);
+	addConf($data);
+}
+
+function deleteConf($id){
+	$confs = getJSON("./db/confs.json");
+	$index = searchIndex($confs, $id);
+
+	unset($confs[$index]);
+}

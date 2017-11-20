@@ -43,12 +43,20 @@
 					$id = (int) secure($_GET['id']);
 
 					if(isset($_POST['post_conf'])){
-						editConf($_POST);
+						editConf($id, $_POST);
+					}else{
+						$currentConf = loadConf($id);
 					}
 					
 				break;
-				default : 
-
+				default :  //Suppression
+					$id = (int) secure($_GET['id']);
+						
+					if(isset($_POST['post_del'])){
+						deleteConf($id);
+					}else{
+						$currentConf = loadConf($id);
+					}
 				break; 
 			}
 			require("pages/add.php");
