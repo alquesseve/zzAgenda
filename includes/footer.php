@@ -12,14 +12,24 @@
 	$admin = isAdmin($lvl)? '<a href="index.php?page=admin">Admin</a>' : NULL;
  ?>
  
- <footer class="footer">
-	      <div class="container m-auto w-100">
-	        <span class="text-muted"><a href="">Item 1</a></span>
-	        <span class="text-muted"><a href="">Item 2</a></span>
-	        <span class="text-muted"><?=$button?></span>
-			<span class="text-muted"><?=$admin?></span>
-	      </div>
-	    </footer>
+<div id="footerwrap">
+	<div class="container">
+	 	<div class="row">
+ 		<div class="col-lg-4">
+			<h4>Home</h4>
+ 			<div class="hline-w"></div>
+ 		</div>
+ 		<div class="col-lg-4">
+ 			<h4><?=$admin?></h4>
+ 			<div class="hline-w"></div>
+ 		</div>
+ 		<div class="col-lg-4">
+ 			<h4><?=$button?></h4>
+ 			<div class="hline-w"></div>
+ 		</div>
+	 	</div> <!--ROW-->
+ 	</div> <!--CONTAINER-->
+</div> <!--FOOTERWRAP-->
 	
 </body>
 </html>
