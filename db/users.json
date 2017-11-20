@@ -1,0 +1,17 @@
+[
+		{
+			"username" : "admin",
+			"password" : "a803fa704f275a6036e40baf82fe2519",
+			"level" : 3
+		},
+		{
+			"username" : "membre",
+			"password" : "c068d42613d1429aff8444e3ece62c91",
+			"level" : 2
+		},
+		{
+			"username" : "personne",
+			"password" : "d8e6b6b9d934748a8a24347966c889b2",
+			"level" : 2
+		}
+]
