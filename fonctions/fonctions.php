@@ -1,4 +1,6 @@
 <?php
+define("CONFERENCES", "db/confs.json");
+
 function connected(){
 	return (isset($_SESSION['id']));
 }
@@ -75,8 +77,8 @@ function redirect($page, $params = NULL){
 	header($url);
 }
 
-function secure($data){
-	$data = (isset($data) && !empty($data))? htmlspecialchars($data) : NULL;
+function secure($data, $default =  NULL){
+	$data = (isset($data) && !empty($data))? htmlspecialchars($data) : $default;
 
 	return $data;
 }
@@ -96,11 +98,30 @@ function manageConnect($data){
 
 
 function export($array){
-	$file =fopen("db/conf.json", 'w');
+	$file =fopen(CONFERENCES, 'w');
 	$data = json_encode($array, FILE_USE_INCLUDE_PATH);
 
 	fwrite($file, $data);
 
+	fclose($file);
+
+}
+
+function compareConfDate($c1, $c2){
+	return ($c1['datetime'] < $c2['datetime']);
+}
+
+function getId($confs){
+	$id= 0;
+	$length = count($confs);
+	if($confs){
+		for($i=0; $i< $length; $i++){
+			if($id <= $confs[$i]['id']){
+				$id = $confs[$i]['id'];
+			}
+		}
+	}
+	return ++$id;
 }
 
 function addConf($data){
@@ -111,13 +132,14 @@ function addConf($data){
 	$hour = secure($data['hour']);
 	$date = secure($data['date']);
 
-	$exploded = explode($date, ':');
-
 	$when = Date ($date . " ". $hour);
 
-	$confs = getJSON("db/conf.json");
+	$confs = getJSON(CONFERENCES);
+
+	$id = getId($confs);
 
 	$newConf= array(
+		"id" => $id,
 		"titre" => $title,
 		"datetime" => $when,
 		"lieu" => $place,
@@ -126,4 +148,26 @@ function addConf($data){
 	);
 
 	array_push($confs,$newConf);
+	usort($confs, 'compareConfDate');
+	export($confs);
 }
+
+function loadConf($id)
+{
+	$confs = getJSON(CONFERENCES);
+	$result = NULL;
+
+	$i = 0;
+	$length = count($confs);
+
+	while ($i < $length && $confs[$i]['index'] != $id){
+		$i++;
+	}
+
+	if($i < $length){
+		$result = $confs[$i];
+	}
+
+	return $result;
+}
+
