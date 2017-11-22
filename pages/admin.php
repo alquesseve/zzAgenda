@@ -13,7 +13,7 @@
 	      			</tr>
 
 	      			<?php
-						$confs = getJSON("db/conf.json");
+						$confs = getJSON(CONFERENCES);
 
 						if($confs){
 							foreach($confs as $conf){

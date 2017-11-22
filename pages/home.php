@@ -2,7 +2,7 @@
 	      	<div class="container">
 
 			<?php
-				$confs = getJSON("db/conf.json");
+				$confs = getJSON(CONFERENCES);
 
 				if($confs){
 				

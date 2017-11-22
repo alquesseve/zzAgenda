@@ -39,7 +39,7 @@
 						addConf($_POST);
 					}
 				break;
-				case "edit" :
+				case "edit" : //Modification
 					$id = (int) secure($_GET['id']);
 
 					if(isset($_POST['post_conf'])){
@@ -54,7 +54,7 @@
 						
 					if(isset($_POST['post_del'])){
 						deleteConf($id);
-					}else{
+					}else{					
 						$currentConf = loadConf($id);
 					}
 				break; 

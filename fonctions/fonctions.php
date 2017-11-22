@@ -1,4 +1,5 @@
 <?php
+define("CONFERENCES", "db/conf.json");
 
 function connected(){
 	return (isset($_SESSION['id']));
@@ -97,7 +98,7 @@ function manageConnect($data){
 
 
 function export($array){
-	$file =fopen("./db/confs.json", 'w');
+	$file =fopen(CONFERENCES, 'w');
 	$data = json_encode($array, FILE_USE_INCLUDE_PATH);
 
 	fwrite($file, $data);
@@ -133,7 +134,7 @@ function addConf($data){
 
 	$when = Date ($date . " ". $hour);
 
-	$confs = getJSON("./db/confs.json");
+	$confs = getJSON(CONFERENCES);
 
 	$id = getId($confs);
 
@@ -156,7 +157,7 @@ function searchIndex($array, $id){
 	$length = count($array);
 	$result = NULL;
 
-	while ($i < $length && $array[$i]['index'] != $id){
+	while ($i < $length && $array[$i]['id'] != $id){
 		$i++;
 	}
 
@@ -169,7 +170,7 @@ function searchIndex($array, $id){
 
 function loadConf($id)
 {
-	$confs = getJSON("./db/confs.json");
+	$confs = getJSON(CONFERENCES);
 	$index = searchIndex($confs, $id);
 
 	$result = NULL;
@@ -187,7 +188,7 @@ function editConf($id, $data){
 }
 
 function deleteConf($id){
-	$confs = getJSON("./db/confs.json");
+	$confs = getJSON(CONFERENCES);
 	$index = searchIndex($confs, $id);
 
 	unset($confs[$index]);

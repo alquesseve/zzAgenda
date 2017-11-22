@@ -1,6 +1,6 @@
 	      <div class="w-50 m-auto">
 	      	<form class="form-signin" action="" method="post">
-	      		<span><a href="admin.php">Retour</a></span>
+	      		<span><a href="index.php?page=admin">Retour</a></span>
 	        <h2 class="form-signin-heading">Ajouter une conférence</h2>
 
 	        <label for="title" class="sr-only">Titre</label>
