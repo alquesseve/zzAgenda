@@ -21,26 +21,32 @@
 	      		<th>Description</th>
 	      		<th>Action</th>
 	      	</tr>
-		<?php
-			$confs = getJSON("db/conf.json");
-			if($confs){
-				foreach($confs as $conf){
-				echo '
-					<tr>
-		      				<td>'.$conf['titre'].'</td>
-		      				<td>'.$conf['lieu'].'</td>
-		      				<td>'.$conf['speaker'].'</td>
-		      				<td>'.$conf['datetime'].'</td>
-		      				<td>'.$conf['description'].'</td>
-		      				<td>
-							<a href="" title ="Edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> 
-							<a href="" title ="Delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
-						</td>
-		      			</tr>
-				';
-				}
-			}
-		?>
-      		</table>
-  	</div>
-</div>
+	      
+	      			<?php
+						$confs = getJSON(CONFERENCES);
+
+						if($confs){
+							foreach($confs as $conf){
+								echo '
+									<tr>
+					      				<td>'.$conf['titre'].'</td>
+					      				<td>'.$conf['lieu'].'</td>
+					      				<td>'.$conf['speaker'].'</td>
+					      				<td>'.$conf['datetime'].'</td>
+					      				<td>'.$conf['description'].'</td>
+					      				<td>
+											<a href="index.php?page=add&action=edit&id='.$conf['id'].'" title ="Edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> 
+											<a href="index.php?page=add&action=del&id='.$conf['id'].'" title ="Delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
+										</td>
+					      			</tr>
+								';
+							}
+						}
+						else {
+							echo "Aucune conférence n'est disponible";
+						}
+
+				?>
+	      		</table>
+	  	</div>
+		</div>

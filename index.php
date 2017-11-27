@@ -30,10 +30,28 @@
 			redirect("login");
 		break;
 		case "add":
-			if(isset($_POST['post_conf'])){
-				addConf($_POST);
+			$action = secure($_GET['action'], 'add');
+
+			switch($action)
+			{
+				case "add" :
+					if(isset($_POST['post_conf'])){
+						addConf($_POST);
+					}
+				break;
+				case "edit" : //Modification
+					if(isset($_POST['post_conf'])){
+						editConf($id, $_POST);
+					}					
+				break;
+				default :  //Suppression						
+					if(isset($_POST['post_del'])){
+						deleteConf($id);
+					}
+				break; 
 			}
 			require("pages/add.php");
+
 		break;
 		default:
 			if($page && file_exists($filename) && authorisation($_SESSION['lvl'], $pages[$page]))

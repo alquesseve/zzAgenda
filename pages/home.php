@@ -10,12 +10,13 @@
 <div class="container mtb">
 	 	<div class="row">
 		<?php
-			$confs = getJSON("db/conf.json");
+			$confs = getJSON(CONFERENCES);
 			if($confs){
 				foreach($confs as $conf){
+          $datetime= formatDate($conf['datetime']);
 				echo '
 					<div class="col-lg-8">
-						<h3> '.$conf['titre'].' - '.$conf['datetime'].'</h3>
+						<h3> '.$conf['titre'].' - '.$datetime['date'] . ' ' . $datetime['heure'] .'</h3>
 						<div> <i>'.$conf['lieu'].'</i></div>
 						<div "class="col">
 								<p> Conférencier: '.$conf['speaker'].'</p>
@@ -33,7 +34,9 @@
 					</div>
 				';
 				}
-			}
+				}else {
+					echo "Aucune conférence n'est disponible";
+				}
 		?>
       	</div>
 </div>

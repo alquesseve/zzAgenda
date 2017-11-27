@@ -1,4 +1,6 @@
 <?php
+define("CONFERENCES", "db/conf.json");
+
 function connected(){
 	return (isset($_SESSION['id']));
 }
@@ -75,10 +77,18 @@ function redirect($page, $params = NULL){
 	header($url);
 }
 
-function secure($data){
-	$data = (isset($data) && !empty($data))? htmlspecialchars($data) : NULL;
+function secure($data, $default =  NULL){
+	$data = (isset($data) && !empty($data))? htmlspecialchars($data) : $default;
 
 	return $data;
+}
+
+function formatDate($datetime){
+	$obj= new DateTime($datetime);
+	$date = $obj->format('d/m/Y');
+	$heure = $obj->format('H:i');
+
+	return array('date' => $date, 'heure' => $heure);
 }
 
 function manageConnect($data){
@@ -96,11 +106,30 @@ function manageConnect($data){
 
 
 function export($array){
-	$file =fopen("db/conf.json", 'w');
+	$file =fopen(CONFERENCES, 'w');
 	$data = json_encode($array, FILE_USE_INCLUDE_PATH);
 
 	fwrite($file, $data);
 
+	fclose($file);
+
+}
+
+function compareConfDate($c1, $c2){
+	return ($c1['datetime'] < $c2['datetime']);
+}
+
+function getId($confs){
+	$id= 0;
+	$length = count($confs);
+	if($confs){
+		for($i=0; $i< $length; $i++){
+			if($id <= $confs[$i]['id']){
+				$id = $confs[$i]['id'];
+			}
+		}
+	}
+	return ++$id;
 }
 
 function addConf($data){
@@ -111,13 +140,14 @@ function addConf($data){
 	$hour = secure($data['hour']);
 	$date = secure($data['date']);
 
-	$exploded = explode($date, ':');
-
 	$when = Date ($date . " ". $hour);
 
-	$confs = getJSON("db/conf.json");
+	$confs = getJSON(CONFERENCES);
+
+	$id = getId($confs);
 
 	$newConf= array(
+		"id" => $id,
 		"titre" => $title,
 		"datetime" => $when,
 		"lieu" => $place,
@@ -126,4 +156,48 @@ function addConf($data){
 	);
 
 	array_push($confs,$newConf);
+	usort($confs, 'compareConfDate');
+	export($confs);
+}
+
+function searchIndex($array, $id){
+	$i = 0;
+	$length = count($array);
+	$result = -1;
+
+	while ($i < $length && $array[$i]['id'] != $id){
+		$i++;
+	}
+
+	if($i < $length){
+		$result = $i;
+	}
+	
+	return $result;
+}
+
+function loadConf($id)
+{
+	$confs = getJSON(CONFERENCES);
+	$index = searchIndex($confs, $id);
+
+	$result = NULL;
+	
+	if($index >= 0){
+		$result = $confs[$index];
+	}
+
+	return $result;
+}
+
+function editConf($id, $data){
+	deleteConf($id);
+	addConf($data);
+}
+
+function deleteConf($id){
+	$confs = getJSON(CONFERENCES);
+	$index = searchIndex($confs, $id);
+
+	unset($confs[$index]);
 }
