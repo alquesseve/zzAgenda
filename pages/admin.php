@@ -1,17 +1,27 @@
-	      <div class="w-80 m-auto">
-	      	<div class="container">
-	      		<h2>Administration</h2>
-	      		<span class="float-right"><a href="index.php?page=add">+Add</a></span>
-	      		<table class="table table-striped">
-	      			<tr>
-	      				<th>Title</th>
-	      				<th>Location</th>
-	      				<th>Speaker</th>
-	      				<th>Hour</th>
-	      				<th>Description</th>
-	      				<th>Action</th>
-	      			</tr>
-
+<div id="blue">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-4">
+				<h3>Manage your conference</h3>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="w-80 m-auto">
+  	<div class="container">
+     		<h2>Administration</h2>
+		<div class="spacing"></div>
+      		<span class="float-right"><a href="index.php?page=add">+Add</a></span>
+   		<table class="table table-striped">
+		<tr>
+			<th>Title</th>
+	      		<th>Location</th>
+	      		<th>Speaker</th>
+	      		<th>Hour</th>
+	      		<th>Description</th>
+	      		<th>Action</th>
+	      	</tr>
+	      
 	      			<?php
 						$confs = getJSON(CONFERENCES);
 
@@ -39,5 +49,4 @@
 				?>
 	      		</table>
 	  	</div>
-		</div>
 		</div>
