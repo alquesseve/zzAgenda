@@ -1,15 +1,16 @@
 <?php
 	if(connected())
 	{
-		$button = '<a href="index.php?page=logout">Logout</a>';
+		$button = '<a href="index.php?page=logout">'.LOGOUT.'</a>';
 	}
 	else
 	{
-		$button = '<a href="index.php?page=login">Login</a>';
+		$button = '<a href="index.php?page=login">'.SIGNIN.'</a>';
 	}
 	$lvl = (isset($_SESSION['lvl']))? $_SESSION['lvl'] : 0;
 	$session= isset($_SESSION['id'])? '<a href="">'.$_SESSION['id'].'</a>' : NULL;
-	$admin = isAdmin($lvl)? '<a href="index.php?page=admin">Admin</a>' : NULL;	
+	$admin = isAdmin($lvl)? '<a href="index.php?page=admin">'.ADMIN_BUTTON.'</a>' : NULL;	
+	$langues= array("English" => "en", "Français" => "fr");
 ?>
 
 <!DOCTYPE html>
@@ -47,21 +48,17 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="home.php">zzAGENDA</a>
+			<a class="navbar-brand" href="index.php">zzAGENDA</a>
 			</div>
 			<div class="navbar-collapse collapse navbar-right">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="home.php">HOME</a></li>
+					<li class="active"><a href="index.php"><?=HOME?></a></li>
 					<li> <?=$session?> </li>
 					<li> <?=$button?> </li>
 					<li> <?=$admin?> </li>
-					<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">LANGUAGES <b class="caret"></b></a>
-					<ul class="dropdown-menu">
-                				<li><a href="home.php">English</a></li>
-                				<li><a href="home.php">Français</a></li>
-             				</ul>
-            				</li>
+					<li>
+						<a href="index.php?lang=<?=$langues[NEXT_LANGUAGE]?>"><?=NEXT_LANGUAGE?></a>
+					</li>
           			</ul>
        			</div>
       		</div>

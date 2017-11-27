@@ -1,8 +1,27 @@
 <?php
 	session_start();
 	ini_set('display_errors', '1');
-
+	
 	require_once("fonctions/fonctions.php");
+	
+	$lang= secure($_GET['lang']);
+	$filename="db/".$lang.'.php';
+	if(($lang && file_exists($filename)))
+	{
+		$_SESSION['lang'] = $lang;		
+		require($filename);
+	}
+	else
+	{
+		if(isset($_SESSION['lang']) && !empty($_SESSION['lang'])){
+			require("db/".$_SESSION['lang'].".php");
+		}
+		else{
+			$_SESSION['lang'] = 'fr';
+			require("db/".$_SESSION['lang'].".php");
+		}
+	}
+
 	require_once("includes/header.php");
 	
 	ini_set('allow_url_fopen', 1);
@@ -14,18 +33,18 @@
 		"admin" => 2
 	);
 
-	$page = (isset($_GET['page']))? htmlspecialchars($_GET['page']): NULL;
+	$page = secure($_GET['page']);
 	$filename= "pages/".$page.".php";
-
+	
 	if(connected())
 	{
 		switch($page)
 	{
 		case "logout":
 			if(disconnect()){
-				echo "Vous avez été déconnecté";
+				echo LOGOUT_NOTIF;
 			}else{
-				echo "Une errreur est survenue";
+				echo LOGOUT_ERROR;
 			}
 			redirect("login");
 		break;
@@ -46,6 +65,7 @@
 				break;
 				default :  //Suppression						
 					if(isset($_POST['post_del'])){
+						$id = (int) secure($_GET['id']);						
 						deleteConf($id);
 					}
 				break; 

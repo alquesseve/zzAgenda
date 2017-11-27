@@ -2,6 +2,24 @@
 	$action = secure($_GET['action']);
 	$id = (int) secure($_GET['id']);
 	
+	$titles= array(
+		'0' => "Titre défaut",
+		'del' => DEL_DESC_TEXT,
+		'add' => ADD_DESC_TEXT,
+		'edit' => EDIT_DESC_TEXT
+	);
+
+	$title = ($action)? $titles[$action] : $titles[0];
+	echo'<div id="blue">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-4">
+					<h3>'.$title.'</h3>
+				</div>
+			</div>
+		</div>
+	</div>';
+
 	if($action != "del")
 	{	
 		if($id){
@@ -12,68 +30,70 @@
 		}	
 		else{
 			$placeholder = array(
-				'titre' => "Titre", 
-				'description' => "Description", 
-				'lieu' => "Lieu", 
-				'speaker' => "Speaker", 
-				'date'=> "Date", 
-				'heure' => "Heure"
+				'titre' => TITLE, 
+				'description' => DESCRIPTION, 
+				'lieu' => PLACE, 
+				'speaker' => SPEAKER, 
+				'date'=> DATE, 
+				'heure' => HOUR
 			);
 		}
+
+		if(isset($_POST['post_conf'])){
+		echo'
+				<div class="col-lg-8">
+					<p>'.CONFIRM_EDIT_ADD.'</p>
+				</div>
+			';
+		}else{
 ?>	
 
-<div id="blue">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-8 col-lg-offset-4">
-				<h3>Add your conference</h3>
-			</div>
-		</div>
-	</div>
-</div>
+
 <div class="container mtb">
 	<div class="row">
 		<div class="col-lg-8">
-			<h4>Add your conference !</h4>
-			<div class="hline"></div>
-			<p>Complete the following fields to add your conference</p>
-			<form role="form">
+			<p><?=ADD_SUB_DESC_TEXT?></p>
+			<form role="form" action="" method="post">
 				<div class="form-group">
-					<label for="speaker" class="sr-only">Speaker</label>
+					<label for="speaker" class="sr-only"><?=SPEAKER?></label>
 					<input type="text" name="speaker" id="speaker" class="form-control" placeholder="<?= $placeholder['speaker']?>" required>
 				</div>
 				<div class="form-group">
-					<label for="title" class="sr-only">Titre</label>
+					<label for="title" class="sr-only"><?=TITLE?></label>
 					<input type="text" name="title" id="title" class="form-control" placeholder="<?= $placeholder['titre']?>" required autofocus>
 				</div>
 				<div class="form-group">
-					<label for="place" class="sr-only">Lieu</label>
+					<label for="place" class="sr-only"><?=PLACE?></label>
 					<input type="text" name="place" id="place" class="form-control" placeholder="<?= $placeholder['lieu']?>" required>
 				</div>
 				<div class="form-group">
-					<label for="date" class="sr-only">Date</label>
+					<label for="date" class="sr-only"><?=DATE?></label>
 					<input type="date" name="date" id="date" class="form-control" placeholder="<?= $placeholder['date']?>" required>
 				</div>
 				<div class="form-group">
-					<label for="hour" class="sr-only">Heure</label>
+					<label for="hour" class="sr-only"><?=HOUR?></label>
 					<input type="time" name="hour" id="hour" class="form-control" placeholder="<?= $placeholder['heure']?>" required>
 				</div>
 				<div class="form-group">
-					<label for="desc" class="sr-only">Description</label>
+					<label for="desc" class="sr-only"><?=DESCRIPTION?></label>
 					<textarea id="desc" name="description" class="form-control" placeholder="<?= $placeholder['description']?>" required></textarea>
 				</div>
-				<button type="submit" name="post_conf" class="btn btn-theme">Submit</button>
+				<button type="submit" name="post_conf" class="btn btn-theme"><?=SUBMIT?></button>
 			</form>
 		</div> <!--COL-LG-8 -->
 	</div> <!--ROW -->
 </div> <!--CONTAINER -->
 
 	<?php
+		}
 	}else{
+		if(isset($_POST['post_del'])){
+			echo "<p>".CONFIRM_DEL."</p>";
+		}else{		
 		?>
 		<form class="form-signin" action="" method="post">
-			<input type="submit" name= "post_del" value="Supprimer" />
+			<input type="submit" name= "post_del" value="<?=DEL_BUTTON?>" />
 		</form>
 		<?php
-	}
+	}}
 	?>

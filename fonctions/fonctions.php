@@ -1,5 +1,6 @@
 <?php
 define("CONFERENCES", "db/conf.json");
+define("USERS", "db/users.json");
 
 function connected(){
 	return (isset($_SESSION['id']));
@@ -12,12 +13,11 @@ function authorisation($userlvl, $pagelvl)
 
 function connect($pseudo, $pwd)
 {
-		$url= "db/users.json";
 		$authenticated = false;
 		
 		$salt = "bb764938100a6ee139c04a52613bd7c1";
 
-		$users = getJSON($url);
+		$users = getJSON(USERS);
 		
 		if($users){
 
@@ -32,12 +32,13 @@ function connect($pseudo, $pwd)
 					{
 						$_SESSION['id'] = $pseudo;
 						$_SESSION['lvl'] = $lvl;
+
 						$authenticated = true;
-						$callback = "Vous avez été connecté avec succès";
+						setcookie("username", $pseudo);	
 					}
 				}
 			}	
-		}			
+		}	
 		return 	$authenticated;
 }
 
@@ -49,7 +50,6 @@ function disconnect(){
 	}catch(Exception $e){
 		$disconnect = false;
 	}
-	$callback = "Vous avez été déconnecté";
 	return $disconnect;
 }
 
@@ -198,6 +198,7 @@ function editConf($id, $data){
 function deleteConf($id){
 	$confs = getJSON(CONFERENCES);
 	$index = searchIndex($confs, $id);
-
-	unset($confs[$index]);
+	array_splice($confs, $index, 1);
+	
+	export($confs);
 }
