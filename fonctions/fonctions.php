@@ -83,6 +83,14 @@ function secure($data, $default =  NULL){
 	return $data;
 }
 
+function formatDate($datetime){
+	$obj= new DateTime($datetime);
+	$date = $obj->format('d/m/Y');
+	$heure = $obj->format('H:i');
+
+	return array('date' => $date, 'heure' => $heure);
+}
+
 function manageConnect($data){
 	$login = secure($data['login']);
 	$pwd = secure($data['pwd']);
@@ -155,7 +163,7 @@ function addConf($data){
 function searchIndex($array, $id){
 	$i = 0;
 	$length = count($array);
-	$result = NULL;
+	$result = -1;
 
 	while ($i < $length && $array[$i]['id'] != $id){
 		$i++;
@@ -164,7 +172,7 @@ function searchIndex($array, $id){
 	if($i < $length){
 		$result = $i;
 	}
-
+	
 	return $result;
 }
 
@@ -174,8 +182,8 @@ function loadConf($id)
 	$index = searchIndex($confs, $id);
 
 	$result = NULL;
-
-	if($index){
+	
+	if($index >= 0){
 		$result = $confs[$index];
 	}
 

@@ -40,22 +40,13 @@
 					}
 				break;
 				case "edit" : //Modification
-					$id = (int) secure($_GET['id']);
-
 					if(isset($_POST['post_conf'])){
 						editConf($id, $_POST);
-					}else{
-						$currentConf = loadConf($id);
-					}
-					
+					}					
 				break;
-				default :  //Suppression
-					$id = (int) secure($_GET['id']);
-						
+				default :  //Suppression						
 					if(isset($_POST['post_del'])){
 						deleteConf($id);
-					}else{					
-						$currentConf = loadConf($id);
 					}
 				break; 
 			}
