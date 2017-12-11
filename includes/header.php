@@ -57,7 +57,7 @@
 					<li> <?=$button?> </li>
 					<li> <?=$admin?> </li>
 					<li>
-						<a href="index.php?lang=<?=$langues[NEXT_LANGUAGE]?>"><?=NEXT_LANGUAGE?></a>
+						<a href="?lang=<?=$langues[NEXT_LANGUAGE]?>"><?=NEXT_LANGUAGE?></a>
 					</li>
           			</ul>
        			</div>

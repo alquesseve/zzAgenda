@@ -27,6 +27,8 @@
 			$datetime= formatDate($placeholder['datetime']);
 			$placeholder['date'] = $datetime['date'];
 			$placeholder['heure'] = $datetime['heure'];
+
+			$placeholder= array_map("concatValue", $placeholder);
 		}	
 		else{
 			$placeholder = array(
@@ -37,13 +39,12 @@
 				'date'=> DATE, 
 				'heure' => HOUR
 			);
+			$placeholder= array_map("concatPlaceholder", $placeholder);
 		}
 
 		if(isset($_POST['post_conf'])){
 		echo'
-				<div class="col-lg-8">
-					<p>'.CONFIRM_EDIT_ADD.'</p>
-				</div>
+				<p>'.(isset($callback) && $callback == "")? CONFIRM_EDIT_ADD : DATA_CHARCHECK_FAILED.'</p>
 			';
 		}else{
 ?>	
@@ -56,27 +57,27 @@
 			<form role="form" action="" method="post">
 				<div class="form-group">
 					<label for="speaker" class="sr-only"><?=SPEAKER?></label>
-					<input type="text" name="speaker" id="speaker" class="form-control" placeholder="<?= $placeholder['speaker']?>" required>
+					<input type="text" name="speaker" id="speaker" class="form-control" <?= $placeholder['speaker']?> required>
 				</div>
 				<div class="form-group">
 					<label for="title" class="sr-only"><?=TITLE?></label>
-					<input type="text" name="title" id="title" class="form-control" placeholder="<?= $placeholder['titre']?>" required autofocus>
+					<input type="text" name="title" id="title" class="form-control" <?= $placeholder['titre']?> required autofocus>
 				</div>
 				<div class="form-group">
 					<label for="place" class="sr-only"><?=PLACE?></label>
-					<input type="text" name="place" id="place" class="form-control" placeholder="<?= $placeholder['lieu']?>" required>
+					<input type="text" name="place" id="place" class="form-control" <?= $placeholder['lieu']?> required>
 				</div>
 				<div class="form-group">
 					<label for="date" class="sr-only"><?=DATE?></label>
-					<input type="date" name="date" id="date" class="form-control" placeholder="<?= $placeholder['date']?>" required>
+					<input type="date" name="date" id="date" class="form-control" <?= $placeholder['date']?> required>
 				</div>
 				<div class="form-group">
 					<label for="hour" class="sr-only"><?=HOUR?></label>
-					<input type="time" name="hour" id="hour" class="form-control" placeholder="<?= $placeholder['heure']?>" required>
+					<input type="time" name="hour" id="hour" class="form-control" <?= $placeholder['heure']?> required>
 				</div>
 				<div class="form-group">
 					<label for="desc" class="sr-only"><?=DESCRIPTION?></label>
-					<textarea id="desc" name="description" class="form-control" placeholder="<?= $placeholder['description']?>" required></textarea>
+					<textarea id="desc" name="description" class="form-control" <?= $placeholder['description']?> required></textarea>
 				</div>
 				<button type="submit" name="post_conf" class="btn btn-theme"><?=SUBMIT?></button>
 			</form>

@@ -1,4 +1,5 @@
 <?php
+	//session_save_path('/home/etud/alquesseve/public_html/tmp');
 	session_start();
 	ini_set('display_errors', '1');
 	
@@ -48,19 +49,19 @@
 			}
 			redirect("login");
 		break;
-		case "add":
+		case "confs":
 			$action = secure($_GET['action'], 'add');
 
 			switch($action)
 			{
 				case "add" :
 					if(isset($_POST['post_conf'])){
-						addConf($_POST);
+						$callback = addConf($_POST);
 					}
 				break;
 				case "edit" : //Modification
 					if(isset($_POST['post_conf'])){
-						editConf($id, $_POST);
+						$callback = editConf($id, $_POST);
 					}					
 				break;
 				default :  //Suppression						
@@ -70,7 +71,32 @@
 					}
 				break; 
 			}
-			require("pages/add.php");
+			require("pages/confs.php");
+
+		break;
+		case "users":
+			$action = secure($_GET['action'], 'add');
+
+			switch($action)
+			{
+				case "add" :
+					if(isset($_POST['post_user'])){
+						$callback= addUser($_POST);
+					}
+				break;
+				case "edit" : //Modification
+					if(isset($_POST['post_user'])){
+						$callback= editUser($id, $_POST);
+					}					
+				break;
+				default :  //Suppression						
+					if(isset($_POST['post_del_user'])){
+						$id = (int) secure($_GET['id']);						
+						deleteConf($id, USERS);
+					}
+				break; 
+			}
+			require("pages/users.php");
 
 		break;
 		default:
