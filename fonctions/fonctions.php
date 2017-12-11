@@ -209,6 +209,7 @@ function addUser($data){
 	}else{
 		$callback = "DATA_CHARCHECK_FAILED";
 	}
+	return $callback; 
 }
 
 function searchIndex($array, $id){
@@ -281,6 +282,7 @@ function editUser($id, $data){
 	}else{
 		$callback = "DATA_CHARCHECK_FAILED";
 	}
+	return $callback;
 }
 
 function concatValue($ch1){

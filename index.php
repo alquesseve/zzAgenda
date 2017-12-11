@@ -5,7 +5,8 @@
 	
 	require_once("fonctions/fonctions.php");
 	
-	$lang= secure($_GET['lang']);
+	$lang= (isset($_GET['lang']))? secure($_GET['lang']) : NULL;
+
 	$filename="db/".$lang.'.php';
 	if(($lang && file_exists($filename)))
 	{
@@ -34,7 +35,7 @@
 		"admin" => 2
 	);
 
-	$page = secure($_GET['page']);
+	$page = (isset($_GET['page']))? secure($_GET['page']) : NULL;
 	$filename= "pages/".$page.".php";
 	
 	if(connected())

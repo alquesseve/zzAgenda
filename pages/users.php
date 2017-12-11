@@ -3,30 +3,20 @@
 	$id = (int) secure($_GET['id']);
 	
 	$titles= array(
-		'0' => "Titre défaut",
+		'0' => "",
 		'del' => DEL_USER_DESC_TEXT,
 		'add' => ADD_USER_DESC_TEXT,
 		'edit' => EDIT_USER_DESC_TEXT
 	);
 
 	if(isset($callback) && $callback != ""){
-		$errorsign = isset($callback) && $callback != "")? "style='background-color:#c0392b;!important'";
+		$errorsign = "style='background-color:#c0392b;!important'";
 		$errormsg = DATA_CHARCHECK_FAILED;
 	}else{
 		$errorsign = NULL;
 		$errormsg = CONFIRM_EDIT_ADD;
 	}
 
-	$title = ($action)? $titles[$action] : $titles[0];
-	echo'<div id="blue" '.$errorsign.'>
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 col-lg-offset-4">
-					<h3>'.$title.'</h3>
-				</div>
-			</div>
-		</div>
-	</div>';
 
 	if($action != "del")
 	{	
@@ -48,10 +38,28 @@
 		}
 
 		if(isset($_POST['post_user'])){
-		echo'
-					<p>'.$errormsg'</p>
-			';
+			echo'<div id="blue" '.$errorsign.'>
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-8 col-lg-offset-4">
+							<h3>'.$errormsg.'</h3>
+						</div>
+					</div>
+				</div>
+			</div>';
 		}else{
+			$title = ($action)? $titles[$action] : $titles[0];
+			echo'<div id="blue" '.$errorsign.'>
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-8 col-lg-offset-4">
+							<h3>'.$title.'</h3>
+						</div>
+					</div>
+				</div>
+			</div>';
+		}
+		 if(!isset($_POST['post_user']) || $errorsign){
 ?>	
 
 
