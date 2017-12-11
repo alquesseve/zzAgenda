@@ -1,5 +1,6 @@
 <?php
 define("CONFERENCES", "db/conf.json");
+define("USERS", "db/users.json");
 
 function connected(){
 	return (isset($_SESSION['id']));
@@ -12,12 +13,11 @@ function authorisation($userlvl, $pagelvl)
 
 function connect($pseudo, $pwd)
 {
-		$url= "db/users.json";
 		$authenticated = false;
 		
 		$salt = "bb764938100a6ee139c04a52613bd7c1";
 
-		$users = getJSON($url);
+		$users = getJSON(USERS);
 		
 		if($users){
 
@@ -32,12 +32,13 @@ function connect($pseudo, $pwd)
 					{
 						$_SESSION['id'] = $pseudo;
 						$_SESSION['lvl'] = $lvl;
+
 						$authenticated = true;
-						$callback = "Vous avez été connecté avec succès";
+						setcookie("username", $pseudo);	
 					}
 				}
 			}	
-		}			
+		}	
 		return 	$authenticated;
 }
 
@@ -49,7 +50,6 @@ function disconnect(){
 	}catch(Exception $e){
 		$disconnect = false;
 	}
-	$callback = "Vous avez été déconnecté";
 	return $disconnect;
 }
 
@@ -94,19 +94,33 @@ function formatDate($datetime){
 function manageConnect($data){
 	$login = secure($data['login']);
 	$pwd = secure($data['pwd']);
+		
+	$test= checkChar($login);
+
+	if(!$test){
+		$connected= connect($login, $pwd);
 			
-	$connected= connect($login, $pwd);
-			
-	if($connected){
-		redirect("home");	
-	}else{
-		redirect("login", "&callback=".$connected);
+		if($connected){
+			redirect("home");	
+		}else{
+			redirect("login", "&callback=DATA_ERROR");
+		}
+	}
+	else{
+		redirect("login", "&callback=".$test);
 	}
 }
 
+function checkChar($ch){
+	$res= "LOGIN_CHECKCHAR_FAILED";
+	if(preg_match ( "$^[a-zA-Z0-9_]{3,16}$" , $ch )){
+		$res= NULL;
+	}
+	return $res;
+}
 
-function export($array){
-	$file =fopen(CONFERENCES, 'w');
+function export($array, $file){
+	$file =fopen($file, 'w');
 	$data = json_encode($array, FILE_USE_INCLUDE_PATH);
 
 	fwrite($file, $data);
@@ -140,24 +154,62 @@ function addConf($data){
 	$hour = secure($data['hour']);
 	$date = secure($data['date']);
 
-	$when = Date ($date . " ". $hour);
+	if(!checkChar($title) && !checkChar($place) && !checkChar($speaker)){
+		$when = Date ($date . " ". $hour);
 
-	$confs = getJSON(CONFERENCES);
+		$confs = getJSON(CONFERENCES);
 
-	$id = getId($confs);
+		$id = getId($confs);
 
-	$newConf= array(
-		"id" => $id,
-		"titre" => $title,
-		"datetime" => $when,
-		"lieu" => $place,
-		"speaker" => $speaker,
-		"description" => $description
-	);
+		$newConf= array(
+			"id" => $id,
+			"titre" => $title,
+			"datetime" => $when,
+			"lieu" => $place,
+			"speaker" => $speaker,
+			"description" => $description
+		);
 
-	array_push($confs,$newConf);
-	usort($confs, 'compareConfDate');
-	export($confs);
+		array_push($confs,$newConf);
+		usort($confs, 'compareConfDate');
+		export($confs, CONFERENCES);
+		
+		$callback="";
+	}else{
+		$callback = "DATA_CHARCHECK_FAILED";
+	}
+	return $callback;
+}
+
+function addUser($data){
+	$username = secure($data['username']);
+	$password = secure($data['password']);
+	$level = secure($data['level']);
+
+	$users = getJSON(USERS);
+
+	$id = getId($users);
+
+	if(!checkChar($username)){
+	
+		$salt = "bb764938100a6ee139c04a52613bd7c1";
+		$password= md5($password.$salt);
+
+		$newUser= array(
+			"id" => $id,
+			"username" => $username,
+			"password" => $password,
+			"level" => $level
+		);
+
+		array_push($users,$newUser);
+		export($users, USERS);
+
+		$callback="";
+	}else{
+		$callback = "DATA_CHARCHECK_FAILED";
+	}
+	return $callback; 
 }
 
 function searchIndex($array, $id){
@@ -176,9 +228,9 @@ function searchIndex($array, $id){
 	return $result;
 }
 
-function loadConf($id)
+function loadConf($id, $data=CONFERENCES)
 {
-	$confs = getJSON(CONFERENCES);
+	$confs = getJSON($data);
 	$index = searchIndex($confs, $id);
 
 	$result = NULL;
@@ -192,12 +244,51 @@ function loadConf($id)
 
 function editConf($id, $data){
 	deleteConf($id);
-	addConf($data);
+	$callback = addConf($data);
 }
 
-function deleteConf($id){
-	$confs = getJSON(CONFERENCES);
+function deleteConf($id, $data=CONFERENCES){
+	$confs = getJSON($data);
 	$index = searchIndex($confs, $id);
+	array_splice($confs, $index, 1);
+	
+	export($confs, $data);
+}
 
-	unset($confs[$index]);
+function editUser($id, $data){
+	deleteConf($id, USERS);
+	
+	$username = secure($data['username']);
+	$password = secure($data['password']);
+	$level = secure($data['level']);
+
+	if(!checkChar($username)){
+
+		$users = getJSON(USERS);
+
+		$id = getId($users);
+	
+		$newUser= array(
+			"id" => $id,
+			"username" => $username,
+			"password" => $password,
+			"level" => $level
+		);
+
+		array_push($users,$newUser);
+		export($users, USERS);
+		
+		$callback="";
+	}else{
+		$callback = "DATA_CHARCHECK_FAILED";
+	}
+	return $callback;
+}
+
+function concatValue($ch1){
+	return ("value=".'"'.$ch1.'"');
+}
+
+function concatPlaceholder($ch1){
+	return ("placeholder=".'"'.$ch1.'"');
 }

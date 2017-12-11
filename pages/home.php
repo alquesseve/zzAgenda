@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-4">
-				<h3>Next Conferences </h3>
+				<h3><?=MAIN_CONF_LIST_TEXT?></h3>
 			</div>
 		</div>
 	</div>
@@ -19,11 +19,11 @@
 						<h3> '.$conf['titre'].' - '.$datetime['date'] . ' ' . $datetime['heure'] .'</h3>
 						<div> <i>'.$conf['lieu'].'</i></div>
 						<div "class="col">
-								<p> Conférencier: '.$conf['speaker'].'</p>
+								<p> '.SPEAKER.': '.$conf['speaker'].'</p>
 						</div>
 						<div>'.$conf['description'].'</div>
 						<div class="spacing"></div>
-				 		<h6>SHARE :</h6>
+				 		<h6>'.SHARE.' :</h6>
 							<p class="share">
 		 					<a href="#"><i class="fa fa-twitter"></i></a>
 		 					<a href="#"><i class="fa fa-facebook"></i></a>

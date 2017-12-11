@@ -1,5 +1,5 @@
 <?php
-require('fonctions.php');
+require('../fonctions/fonctions.php');
 
 use PHPUnit\Framework\TestCase;
 

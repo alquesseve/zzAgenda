@@ -1,15 +1,18 @@
 <?php
 	$text = NULL;
-	if(isset($_GET['callback']) && !$_GET['callback']){
-			$text = "Les données saisies ne sont pas valides";
+	$errorsign = NULL;
+	if(isset($_GET['callback']) && !empty($_GET['callback'])){
+			$text = INPUT_ERROR;
+			$errorsign = "style='background-color:#c0392b;!important'";
 	}
+	$username = (isset($_COOKIE['username']))? "value=".secure($_COOKIE['username']) : USERNAME;
 ?>
 
-<div id="blue">
+<div id="blue" <?=$errorsign?>>
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-3">
-				<h3>Connect to add conferences</h3>
+				<h3><?=(isset($_GET['callback']) && ($_GET['callback'] =="LOGIN_CHECKCHAR_FAILED"))? LOGIN_CHECKCHAR_FAILED : LOGOUT_DESC?></h3>
 			</div>
 		</div><!-- /row -->
 	</div> <!-- /container -->
@@ -20,13 +23,13 @@
 	<div class="row">
 		<div class="col-lg-8">
 			<form  action="" method="post" role="form">
-				<h2 class="form-signin-heading">Sign in</h2>
-				<label for="login" class="sr-only">Login</label>
-				<input type="text" id="login" name="login" class="form-control" placeholder="Login" required autofocus>
-				<label for="pwd" class="sr-only">Password</label>
-				<input type="password" id="pwd" name="pwd" class="form-control" placeholder="Password" required>
+				<h2 class="form-signin-heading"><?=SIGNIN?></h2>
+				<label for="login" class="sr-only"><?=USERNAME?></label>
+				<input type="text" id="login" name="login" class="form-control" placeholder="<?=USERNAME?>" <?=$username?> required autofocus>
+				<label for="pwd" class="sr-only"><?=PASSWORD?></label>
+				<input type="password" id="pwd" name="pwd" class="form-control" placeholder="<?=PASSWORD?>" required>
 				<div class="spacing"></div>
-				<button type="submit" class="btn btn-theme">Connect</button>
+				<button type="submit" class="btn btn-theme"><?=CONNECT_BUTTON?></button>
 			</form>
 		</div><! --/col-lg-8 -->
 	</div><! --/row -->

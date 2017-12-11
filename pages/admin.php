@@ -2,24 +2,24 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-4">
-				<h3>Manage your conference</h3>
+				<h3><?=ADMIN_DESC_TEXT?></h3>
 			</div>
 		</div>
 	</div>
 </div>
 <div class="w-80 m-auto">
   	<div class="container">
-     		<h2>Administration</h2>
+     		<h2><?=ADMIN?></h2>
 		<div class="spacing"></div>
-      		<span class="float-right"><a href="index.php?page=add">+Add</a></span>
+      		<span class="float-right"><a href="index.php?page=confs">+<?=ADD?></a></span>
    		<table class="table table-striped">
 		<tr>
-			<th>Title</th>
-	      		<th>Location</th>
-	      		<th>Speaker</th>
-	      		<th>Hour</th>
-	      		<th>Description</th>
-	      		<th>Action</th>
+			<th><?=TITLE?></th>
+	      		<th><?=PLACE?></th>
+	      		<th><?=SPEAKER?></th>
+	      		<th><?=HOUR?></th>
+	      		<th><?=DESCRIPTION?></th>
+	      		<th><?=ACTION?></th>
 	      	</tr>
 	      
 	      			<?php
@@ -35,18 +35,48 @@
 					      				<td>'.$conf['datetime'].'</td>
 					      				<td>'.$conf['description'].'</td>
 					      				<td>
-											<a href="index.php?page=add&action=edit&id='.$conf['id'].'" title ="Edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> 
-											<a href="index.php?page=add&action=del&id='.$conf['id'].'" title ="Delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
+											<a href="index.php?page=confs&action=edit&id='.$conf['id'].'" title ="'.EDIT_BUTTON.'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> 
+											<a href="index.php?page=confs&action=del&id='.$conf['id'].'" title ="'.DEL_BUTTON.'"><i class="fa fa-trash" aria-hidden="true"></i></a>
 										</td>
 					      			</tr>
 								';
 							}
 						}
 						else {
-							echo "Aucune conférence n'est disponible";
+							echo NO_CONF;
 						}
 
 				?>
 	      		</table>
+
+<div class="spacing"></div>
+      		<span class="float-right"><a href="index.php?page=users">+<?=ADD?></a></span>
+   		<table class="table table-striped">
+		<tr>
+			<th><?=USERNAME?></th>
+	      		<th><?=LEVEL?></th>
+	      		<th><?=ACTION?></th>
+	      	</tr>
+	      
+	      			<?php
+						$users = getJSON(USERS);
+							$levelTab= array("Inexistant", "Banni", "Membre", "Admin");
+						if($users){
+							foreach($users as $user){
+								echo '
+									<tr>
+					      				<td>'.$user['username'].'</td>
+					      				<td>'.$levelTab[$user['level']].'</td>
+					      				<td>
+											<a href="index.php?page=users&action=edit&id='.$user['id'].'" title ="'.EDIT_BUTTON.'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+											<a href="index.php?page=users&action=del&id='.$user['id'].'" title ="'.DEL_BUTTON.'"><i class="fa fa-trash" aria-hidden="true"></i></a>
+										</td>
+					      			</tr>
+								';
+							}
+						}
+				?>
+	      		</table>
+
 	  	</div>
 		</div>
