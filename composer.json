@@ -5,11 +5,16 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "",
-            "email": ""
+            "name": "David Santiago",
+            "email": "dawlys@gmail.com"
         }
     ],
     "require-dev": {
         "phpunit/phpunit": "4.0.*"
     },
+    "autoload": {
+        "psr-0": {
+            "ZZTask": "src/"
+        }
+    }
 }
