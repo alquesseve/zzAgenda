@@ -16,12 +16,15 @@
         </testsuite>
     </testsuites>
 
-    <!--<filter>
+    <filter>
         <whitelist addUncoveredFilesFromWhitelist="false">
-            <directory suffix=".php">src</directory>
+            <directory suffix=".php">./fonctions</directory>
             <exclude>
-                <directory suffix=".php">vendor</directory>
+                <directory suffix=".php">./db</directory>
+		<directory suffix=".php">./includes</directory>
+		<directory suffix=".php">./pages</directory>
+		<directory suffix=".php">./styles</directory>
             </exclude>
         </whitelist>
-    </filter>-->
+    </filter>
 </phpunit>
