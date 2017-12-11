@@ -1,0 +1,15 @@
+{
+    "name": "dawlys/travis-example",
+    "description": "Travis CI example.",
+    "keywords": ["travis"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "",
+            "email": ""
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "4.0.*"
+    },
+}
