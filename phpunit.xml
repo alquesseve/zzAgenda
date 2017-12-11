@@ -12,7 +12,7 @@
 >
     <testsuites>
         <testsuite name="zzAgenda Test Suite">
-            <directory>./fonctions/</directory>
+            <directory>./tests/</directory>
         </testsuite>
     </testsuites>
 
