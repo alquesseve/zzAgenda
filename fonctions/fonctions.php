@@ -148,7 +148,7 @@ function getId($confs){
 
 function addConf($data){
 	$title = secure($data['title']);
-	$description = secure($data['description']);
+	$description = (isset($data['description']))? $data['description'] : NULL;
 	$place = secure($data['place']);
 	$speaker = secure($data['speaker']);
 	$hour = secure($data['hour']);
@@ -207,7 +207,7 @@ function addUser($data){
 
 		$callback="";
 	}else{
-		$callback = "DATA_CHARCHECK_FAILED";
+		$callback = "LOGIN_CHECKCHAR_FAILED";
 	}
 	return $callback; 
 }

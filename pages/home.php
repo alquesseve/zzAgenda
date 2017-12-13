@@ -25,9 +25,9 @@
 						<div class="spacing"></div>
 				 		<h6>'.SHARE.' :</h6>
 							<p class="share">
-		 					<a href="#"><i class="fa fa-twitter"></i></a>
-		 					<a href="#"><i class="fa fa-facebook"></i></a>
-		 					<a href="#"><i class="fa fa-google-plus"></i></a>		 		
+		 					<a href="https://twitter.com/intent/tweet?text=Rejoignez-moi%20à la conf&eacute;rence '.$conf['titre'].' le '.$datetime['date'].' https://www.isima.fr/~alquesseve/devweb/agenda/index.php"><i class="fa fa-twitter"></i></a>
+		 					<a href="https://www.facebook.com/sharer/sharer.php?u=https://www.isima.fr/~alquesseve/devweb/agenda/index.php"><i class="fa fa-facebook"></i></a>
+		 					<a href="https://plus.google.com/share?url=https://www.isima.fr/~alquesseve/devweb/agenda/index.php"><i class="fa fa-google-plus"></i></a>		 		
 		 				</p>
 		 			<div class="hline"></div>
 			 		<div class="spacing"></div>

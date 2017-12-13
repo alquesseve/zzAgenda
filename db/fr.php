@@ -25,6 +25,7 @@ define("EDIT_DESC_TEXT", "Modifier une conférence");
 define("DEL_DESC_TEXT", "Supprimer une conférence");
 define("NO_CONF", "Aucune conférence n'est disponible");
 define("CONFIRM_DEL", "La conférence a été supprimée");
+define("CONFIRM_DEL_U", "L'utilisateur a été supprimé");
 define("CONFIRM_EDIT_ADD", "Vos modifications ont été enregistrées");
 define("ADMIN_BUTTON", "Administration");
 define("DEL_BUTTON", "Supprimer");
@@ -39,4 +40,5 @@ define("ADD_USER_DESC_TEXT", "Ajouter un utilisateur");
 define("EDIT_USER_DESC_TEXT", "Modifier un utilisateur");
 define("LOGIN_CHECKCHAR_FAILED", "L'identifiant ne doit pas contenir de caractères spéciaux et faire entre 3 et 16 caractères");
 define("DATA_CHARCHECK_FAILED", "Les champs ne doivent pas contenir de caractères spéciaux.");
+define("CONNECTED_AS", "Connecté en tant que");
 ?>

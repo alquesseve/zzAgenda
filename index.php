@@ -1,7 +1,7 @@
 <?php
 	//session_save_path('/home/etud/alquesseve/public_html/tmp');
 	session_start();
-	ini_set('display_errors', '1');
+	//ini_set('display_errors', '1');
 	
 	require_once("fonctions/fonctions.php");
 	

@@ -11,7 +11,7 @@
 
 	if(isset($callback) && $callback != ""){
 		$errorsign = "style='background-color:#c0392b;!important'";
-		$errormsg = DATA_CHARCHECK_FAILED;
+		$errormsg = LOGIN_CHECKCHAR_FAILED;
 	}else{
 		$errorsign = NULL;
 		$errormsg = CONFIRM_EDIT_ADD;
@@ -89,10 +89,23 @@
 	<?php
 		}
 	}else{
-		if(isset($_POST['post_del_user'])){
-			echo "<p>".CONFIRM_DEL."</p>";
+		?>
+		<div id="blue">
+				<div class="container">
+					<div class="row">
+					<div class="col-lg-8 col-lg-offset-4">
+						<h3><?= $titles['del']?></h3>
+					</div>
+				</div>
+			</div>
+		</div><?php
+
+	if(isset($_POST['post_del_user'])){
+			echo "<p>".CONFIRM_DEL_U."</p>";
 		}else{		
 		?>
+		
+
 		<form class="form-signin" action="" method="post">
 			<input type="submit" name= "post_del_user" value="<?=DEL_BUTTON?>" />
 		</form>

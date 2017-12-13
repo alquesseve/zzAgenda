@@ -11,7 +11,7 @@
   	<div class="container">
      		<h2><?=ADMIN?></h2>
 		<div class="spacing"></div>
-      		<span class="float-right"><a href="index.php?page=confs">+<?=ADD?></a></span>
+      		<span class="float-right"><a href="index.php?page=confs&action=add">+<?=ADD?></a></span>
    		<table class="table table-striped">
 		<tr>
 			<th><?=TITLE?></th>
@@ -50,7 +50,7 @@
 	      		</table>
 
 <div class="spacing"></div>
-      		<span class="float-right"><a href="index.php?page=users">+<?=ADD?></a></span>
+      		<span class="float-right"><a href="index.php?page=users&action=add">+<?=ADD?></a></span>
    		<table class="table table-striped">
 		<tr>
 			<th><?=USERNAME?></th>

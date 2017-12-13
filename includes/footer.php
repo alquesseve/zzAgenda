@@ -32,4 +32,6 @@
 </div> <!--FOOTERWRAP-->
 	
 </body>
+<script type="text/javascript" src="styles/assets/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="styles/assets/js/bbcode.js"></script>
 </html>
