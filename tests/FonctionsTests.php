@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors', '1');
 
-require("/fonctions/fonctions.php");
+require("../fonctions/fonctions.php");
 
 use PHPUnit\Framework\TestCase;
 
