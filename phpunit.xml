@@ -12,7 +12,7 @@
 >
     <testsuites>
         <testsuite name="zzAgenda Test Suite">
-            <directory>./tests/</directory>
+            <directory suffix="Tests.php" >./tests/</directory>
         </testsuite>
     </testsuites>
 </phpunit>
