@@ -11,7 +11,7 @@
   	<div class="container">
      		<h2><?=ADMIN?></h2>
 		<div class="spacing"></div>
-      		<span class="float-right"><a href="index.php?page=confs">+<?=ADD?></a></span>
+      		<span class="float-right"><a href="index.php?page=confs&action=add">+<?=ADD?></a></span>
    		<table class="table table-striped">
 		<tr>
 			<th><?=TITLE?></th>
@@ -23,6 +23,7 @@
 	      	</tr>
 	      
 	      			<?php
+						//Get conferences list						
 						$confs = getJSON(CONFERENCES);
 
 						if($confs){
@@ -50,7 +51,7 @@
 	      		</table>
 
 <div class="spacing"></div>
-      		<span class="float-right"><a href="index.php?page=users">+<?=ADD?></a></span>
+      		<span class="float-right"><a href="index.php?page=users&action=add">+<?=ADD?></a></span>
    		<table class="table table-striped">
 		<tr>
 			<th><?=USERNAME?></th>
@@ -59,22 +60,26 @@
 	      	</tr>
 	      
 	      			<?php
-						$users = getJSON(USERS);
-							$levelTab= array("Inexistant", "Banni", "Membre", "Admin");
-						if($users){
-							foreach($users as $user){
-								echo '
-									<tr>
-					      				<td>'.$user['username'].'</td>
-					      				<td>'.$levelTab[$user['level']].'</td>
-					      				<td>
-											<a href="index.php?page=users&action=edit&id='.$user['id'].'" title ="'.EDIT_BUTTON.'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-											<a href="index.php?page=users&action=del&id='.$user['id'].'" title ="'.DEL_BUTTON.'"><i class="fa fa-trash" aria-hidden="true"></i></a>
-										</td>
-					      			</tr>
-								';
+							//Get users list							
+							$users = getJSON(USERS);
+	
+							//Define tag for user level
+							$levelTab= array(NO_TAG, BAN_TAG, MEMBER_TAG, ADMIN_TAG);
+							
+							if($users){
+								foreach($users as $user){
+									echo '
+										<tr>
+						      				<td>'.$user['username'].'</td>
+						      				<td>'.$levelTab[$user['level']].'</td>
+						      				<td>
+												<a href="index.php?page=users&action=edit&id='.$user['id'].'" title ="'.EDIT_BUTTON.'"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+												<a href="index.php?page=users&action=del&id='.$user['id'].'" title ="'.DEL_BUTTON.'"><i class="fa fa-trash" aria-hidden="true"></i></a>
+											</td>
+						      			</tr>
+									';
+								}
 							}
-						}
 				?>
 	      		</table>
 

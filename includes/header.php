@@ -8,7 +8,7 @@
 		$button = '<a href="index.php?page=login">'.SIGNIN.'</a>';
 	}
 	$lvl = (isset($_SESSION['lvl']))? $_SESSION['lvl'] : 0;
-	$session= isset($_SESSION['id'])? '<a href="">'.$_SESSION['id'].'</a>' : NULL;
+	$session= isset($_SESSION['id'])? '<a disabled>'.CONNECTED_AS.' : '.$_SESSION['id'].'</a>' : NULL;
 	$admin = isAdmin($lvl)? '<a href="index.php?page=admin">'.ADMIN_BUTTON.'</a>' : NULL;	
 	$langues= array("English" => "en", "Français" => "fr");
 ?>
@@ -35,10 +35,11 @@
 	<!-- Custom styles for this template -->
 	<link href="./styles/assets/css/style.css" rel="stylesheet">
 	<link href="./styles/assets/css/font-awesome.min.css" rel="stylesheet">
+	<link href="./styles/assets/css/bbcode.css" rel="stylesheet">
 </head>
-
-</body>
-	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+<body>
+	<header>
+		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="container">
 			<img src="https://t3.ftcdn.net/jpg/01/00/81/12/240_F_100811279_PleySq4uQIyhBePf6jSkxhSxLJzBXojm.jpg" height="75" width="125" margin-left="100">
 		        <div class="navbar-header">
@@ -52,15 +53,15 @@
 			</div>
 			<div class="navbar-collapse collapse navbar-right">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="index.php"><?=HOME?></a></li>
-					<li> <?=$session?> </li>
+					<li><a href="index.php"><?=HOME?></a></li>
 					<li> <?=$button?> </li>
 					<li> <?=$admin?> </li>
 					<li>
 						<a href="?lang=<?=$langues[NEXT_LANGUAGE]?>"><?=NEXT_LANGUAGE?></a>
 					</li>
+					<li class='active' id="connected-as"> <?=$session?> </li>
           			</ul>
        			</div>
       		</div>
 	</div>
-<body>
+	</header>

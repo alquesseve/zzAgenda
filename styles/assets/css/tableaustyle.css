@@ -2,6 +2,10 @@
 
 /** Table Styles **/
 
+tr, td{
+	vertical-align : center;
+}
+
 .table-fill {
   background: white;
   border-radius:3px;

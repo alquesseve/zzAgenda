@@ -1,9 +1,13 @@
 <?php
-require('../fonctions/fonctions.php');
+ini_set('display_errors', '1');
+
+require("./../fonctions/fonctions.php");
 
 use PHPUnit\Framework\TestCase;
 
 class Test extends TestCase{
+
+	// test de la fonction d'authorisation
 	public function testAuthorisation()
 	{
 		//Variables

@@ -23,6 +23,7 @@ define("ADD_SUB_DESC_TEXT", "Complete the following fields");
 define("SUBMIT", "Submit");
 define("EDIT_DESC_TEXT", "Edit a conference");
 define("DEL_DESC_TEXT", "Delete a conference");
+define("CONFIRM_DEL_U", "The user has been deleted");
 define("NO_CONF", "No conference is available");
 define("CONFIRM_DEL", "The conference has been deleted");
 define("CONFIRM_EDIT_ADD", "Your modifications have been saved");
@@ -39,4 +40,9 @@ define("ADD_USER_DESC_TEXT", "Add a user");
 define("EDIT_USER_DESC_TEXT", "Edit a user");
 define("LOGIN_CHECKCHAR_FAILED", "The login must not contain special characters and have a length between 3 and 16 characters");
 define("DATA_CHARCHECK_FAILED", "The fields must not contain special characters.");
+define("CONNECTED_AS", "Connected as");
+define("NO_TAG", "No account");
+define("BAN_TAG", "Banned");
+define("MEMBER_TAG", "Member");
+define("ADMIN_TAG", "Admin");
 ?>

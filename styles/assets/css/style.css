@@ -22,12 +22,15 @@
 	} 
 
 body { 
-	background: #ffffff; 
+	padding-top: 2%;	
+background: #ffffff; 
 	margin: 0; 
 	height: 100%; 
 	color: #384452;
 	font-family: 'Lato', sans-serif;
 	font-weight: 400;
+	overflow: scroll;
+	height : 50%;
 	}
 
 h1, h2, h3, h4, h5, h6 {
@@ -180,8 +183,8 @@ a:focus {
 }
 
 .mtb {
-	margin-top: 80px;
-	margin-bottom: 80px;
+	margin-top: 40px;
+	margin-bottom: 40px;
 }
 
 .mb {
@@ -334,11 +337,11 @@ a:focus {
 
 /* Footer */
 #footerwrap {
-	padding-top: 60px;
-	padding-bottom: 60px;
+	padding-top: 20px;
+	padding-bottom: 20px;
 	background: #384452;
-	position : fixed;
-	bottom : 0;
+	/*position : fixed;
+	bottom : 0;*/
 	width : 100%;
 }
 
@@ -366,16 +369,16 @@ a:focus {
 /* General Tweaks */
 
 #blue {
+	position : relative;	
 	background: #00b3fe;
-	margin-top: 60px;
-	margin-bottom: 60px;
-	padding-top: 25px;
-	padding-bottom: 25px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 
 #blue h3 {
 	color: white;
-	margin-left: 15px;
 }
 
 .ctitle {
@@ -460,4 +463,12 @@ csmall2 {
 .share i {
 	padding-right: 15px;
 	font-size: 18px;
+}
+
+#connected-as a, #connected-as a:hover{
+	cursor : initial;
+}
+
+tr, td{
+	vertical-align : center;
 }
