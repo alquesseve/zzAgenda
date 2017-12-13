@@ -1,10 +1,15 @@
 <?php
+	//Default callback return value	
 	$text = NULL;
 	$errorsign = NULL;
+
+	//if a callback has been received
 	if(isset($_GET['callback']) && !empty($_GET['callback'])){
 			$text = INPUT_ERROR;
 			$errorsign = "style='background-color:#c0392b;!important'";
 	}
+
+	//Get cookie information if exists
 	$username = (isset($_COOKIE['username']))? "value=".secure($_COOKIE['username']) : USERNAME;
 ?>
 
@@ -14,9 +19,9 @@
 			<div class="col-lg-8 col-lg-offset-3">
 				<h3><?=(isset($_GET['callback']) && ($_GET['callback'] =="LOGIN_CHECKCHAR_FAILED"))? LOGIN_CHECKCHAR_FAILED : LOGOUT_DESC?></h3>
 			</div>
-		</div><!-- /row -->
-	</div> <!-- /container -->
-</div><!-- /blue -->
+		</div>
+	</div> 
+</div>
 
 <div class="container mtb">
 	<p><?=$text?></p>
@@ -31,6 +36,6 @@
 				<div class="spacing"></div>
 				<button type="submit" class="btn btn-theme"><?=CONNECT_BUTTON?></button>
 			</form>
-		</div><! --/col-lg-8 -->
-	</div><! --/row -->
-</div><! --/container -->
+		</div>
+	</div>
+</div>

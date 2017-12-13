@@ -41,4 +41,8 @@ define("EDIT_USER_DESC_TEXT", "Edit a user");
 define("LOGIN_CHECKCHAR_FAILED", "The login must not contain special characters and have a length between 3 and 16 characters");
 define("DATA_CHARCHECK_FAILED", "The fields must not contain special characters.");
 define("CONNECTED_AS", "Connected as");
+define("NO_TAG", "No account");
+define("BAN_TAG", "Banned");
+define("MEMBER_TAG", "Member");
+define("ADMIN_TAG", "Admin");
 ?>

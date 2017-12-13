@@ -41,4 +41,8 @@ define("EDIT_USER_DESC_TEXT", "Modifier un utilisateur");
 define("LOGIN_CHECKCHAR_FAILED", "L'identifiant ne doit pas contenir de caractères spéciaux et faire entre 3 et 16 caractères");
 define("DATA_CHARCHECK_FAILED", "Les champs ne doivent pas contenir de caractères spéciaux.");
 define("CONNECTED_AS", "Connecté en tant que");
+define("NO_TAG", "Inexistant");
+define("BAN_TAG", "Banni");
+define("MEMBER_TAG", "Membre");
+define("ADMIN_TAG", "Administrateur");
 ?>

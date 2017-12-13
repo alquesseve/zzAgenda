@@ -1,64 +1,80 @@
 <?php
+
+//Global link to files
 define("CONFERENCES", "db/conf.json");
 define("USERS", "db/users.json");
 
+//Check if the user is connected
 function connected(){
 	return (isset($_SESSION['id']));
 }
 
+//check if the user has the right to enter in a page
 function authorisation($userlvl, $pagelvl)
 {
 	return ($userlvl >= $pagelvl);
 }
 
+//Connect the user (if no error)
 function connect($pseudo, $pwd)
 {
-		$authenticated = false;
+	$authenticated = false;
+	
+	//salt used to store passwords
+	$salt = "bb764938100a6ee139c04a52613bd7c1";
+
+	//get users list
+	$users = getJSON(USERS);
 		
-		$salt = "bb764938100a6ee139c04a52613bd7c1";
+	if($users){
+		$i = 0;
 
-		$users = getJSON(USERS);
+		while($i < count($users) && $users[$i]['username'] != $pseudo){			
+			$i++;	
+		}
 		
-		if($users){
+		//if the $pseudo has been found
+		if($i < count($users)){
+			$name= $users[$i]['username'];
+			$mdp = $users[$i]['password'];
+			$lvl = $users[$i]['level'];
 
-			foreach($users as $user){			
-				$name= $user['username'];
-				$mdp = $user['password'];
-				$lvl = $user['level'];
-				
-				if($name == $pseudo)
-				{
-					if(md5($pwd.$salt) == $mdp)
-					{
-						$_SESSION['id'] = $pseudo;
-						$_SESSION['lvl'] = $lvl;
-
-						$authenticated = true;
-						setcookie("username", $pseudo);	
-					}
-				}
-			}	
+			if(md5($pwd.$salt) == $mdp)
+			{
+				$_SESSION['id'] = $pseudo;
+				$_SESSION['lvl'] = $lvl;
+				$authenticated = true;
+				setcookie("username", $pseudo);	
+			}
 		}	
-		return 	$authenticated;
+	}	
+	return 	$authenticated;
 }
 
-function disconnect(){
-	$_SESSION['id']= "";
-	$disconnect = true;
-	try{
-	session_destroy();
-	}catch(Exception $e){
-		$disconnect = false;
-	}
-	return $disconnect;
-}
-
+//Check if the user is an administrator
 function isAdmin($lvl){
 	return ($lvl >= 3);
 }
 
+//Disconnect the user
+function disconnect(){
+
+	$_SESSION['id']= "";
+	$disconnect = true;
+
+	try{	
+		session_destroy();
+	}catch(Exception $e){
+		$disconnect = false;
+	}
+	
+	return $disconnect;
+}
+
+//Get JSON content of the $file
 function getJSON($file){
 	$data = file_get_contents($file);
+	
 	if($data){
 		$decode = json_decode($data, FILE_USE_INCLUDE_PATH);
 	}
@@ -69,6 +85,7 @@ function getJSON($file){
 	return $decode;
 }
 
+//Redirect user to the specific $page
 function redirect($page, $params = NULL){
 	$url = "Location:index.php?page=".$page;
 	if($params){
@@ -77,12 +94,15 @@ function redirect($page, $params = NULL){
 	header($url);
 }
 
+
+//Get data from url or form and secure it to avoid undesired scripts execution
 function secure($data, $default =  NULL){
 	$data = (isset($data) && !empty($data))? htmlspecialchars($data) : $default;
 
 	return $data;
 }
 
+//Separate date and time from a timestamp
 function formatDate($datetime){
 	$obj= new DateTime($datetime);
 	$date = $obj->format('d/m/Y');
@@ -91,13 +111,16 @@ function formatDate($datetime){
 	return array('date' => $date, 'heure' => $heure);
 }
 
+//handle submitted data from form and verify it
 function manageConnect($data){
 	$login = secure($data['login']);
 	$pwd = secure($data['pwd']);
 		
+	//verify characters
 	$test= checkChar($login);
 
 	if(!$test){
+		//trying to connect the user
 		$connected= connect($login, $pwd);
 			
 		if($connected){
@@ -111,14 +134,18 @@ function manageConnect($data){
 	}
 }
 
+//Verify the $ch : check if there is no special characters and that the length is between 3 and 16
 function checkChar($ch){
+	//error code
 	$res= "LOGIN_CHECKCHAR_FAILED";
+
 	if(preg_match ( "$^[a-zA-Z0-9_]{3,16}$" , $ch )){
 		$res= NULL;
 	}
 	return $res;
 }
 
+//export JSON data ($array) to $file
 function export($array, $file){
 	$file =fopen($file, 'w');
 	$data = json_encode($array, FILE_USE_INCLUDE_PATH);
@@ -126,13 +153,14 @@ function export($array, $file){
 	fwrite($file, $data);
 
 	fclose($file);
-
 }
 
+//Compare conferences based on datetime field
 function compareConfDate($c1, $c2){
 	return ($c1['datetime'] < $c2['datetime']);
 }
 
+//Get the ID of a specific entity
 function getId($confs){
 	$id= 0;
 	$length = count($confs);
@@ -146,14 +174,19 @@ function getId($confs){
 	return ++$id;
 }
 
+//add a conference based on $data received from a form
 function addConf($data){
 	$title = secure($data['title']);
+	//No use of secure function to avoid htmlspecialchars()
 	$description = (isset($data['description']))? $data['description'] : NULL;
 	$place = secure($data['place']);
 	$speaker = secure($data['speaker']);
 	$hour = secure($data['hour']);
 	$date = secure($data['date']);
 
+	$callback = "DATA_CHARCHECK_FAILED";
+
+	//If the fields are OK	
 	if(!checkChar($title) && !checkChar($place) && !checkChar($speaker)){
 		$when = Date ($date . " ". $hour);
 
@@ -161,6 +194,7 @@ function addConf($data){
 
 		$id = getId($confs);
 
+		//create new entity		
 		$newConf= array(
 			"id" => $id,
 			"titre" => $title,
@@ -171,16 +205,18 @@ function addConf($data){
 		);
 
 		array_push($confs,$newConf);
+		//sort the new list of conferences
 		usort($confs, 'compareConfDate');
 		export($confs, CONFERENCES);
 		
 		$callback="";
-	}else{
-		$callback = "DATA_CHARCHECK_FAILED";
 	}
+
 	return $callback;
 }
 
+
+//Add a user based on $data received from a form
 function addUser($data){
 	$username = secure($data['username']);
 	$password = secure($data['password']);
@@ -190,9 +226,12 @@ function addUser($data){
 
 	$id = getId($users);
 
+	$callback = "LOGIN_CHECKCHAR_FAILED";
+
 	if(!checkChar($username)){
 	
 		$salt = "bb764938100a6ee139c04a52613bd7c1";
+		//password encryption		
 		$password= md5($password.$salt);
 
 		$newUser= array(
@@ -206,12 +245,13 @@ function addUser($data){
 		export($users, USERS);
 
 		$callback="";
-	}else{
-		$callback = "LOGIN_CHECKCHAR_FAILED";
 	}
+
 	return $callback; 
 }
 
+
+//Search the index of the entity with ID: $id  in $array
 function searchIndex($array, $id){
 	$i = 0;
 	$length = count($array);
@@ -228,9 +268,10 @@ function searchIndex($array, $id){
 	return $result;
 }
 
-function loadConf($id, $data=CONFERENCES)
+//Load the conference with the specific $id
+function loadConf($id, $file=CONFERENCES)
 {
-	$confs = getJSON($data);
+	$confs = getJSON($file);
 	$index = searchIndex($confs, $id);
 
 	$result = NULL;
@@ -242,19 +283,22 @@ function loadConf($id, $data=CONFERENCES)
 	return $result;
 }
 
+//Edit a conf specified by $id, $data contain the new entity
 function editConf($id, $data){
 	deleteConf($id);
 	$callback = addConf($data);
 }
 
-function deleteConf($id, $data=CONFERENCES){
-	$confs = getJSON($data);
+//Delete an entity (default, a conference)
+function deleteConf($id, $file=CONFERENCES){
+	$confs = getJSON($file);
 	$index = searchIndex($confs, $id);
 	array_splice($confs, $index, 1);
 	
 	export($confs, $data);
 }
 
+//Edit a user
 function editUser($id, $data){
 	deleteConf($id, USERS);
 	
@@ -285,10 +329,12 @@ function editUser($id, $data){
 	return $callback;
 }
 
+//prepend "value=" to $ch1
 function concatValue($ch1){
 	return ("value=".'"'.$ch1.'"');
 }
 
+//prepend "placeholder=" to $ch1
 function concatPlaceholder($ch1){
 	return ("placeholder=".'"'.$ch1.'"');
 }
