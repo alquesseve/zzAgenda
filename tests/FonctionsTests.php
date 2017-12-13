@@ -19,6 +19,7 @@ class Test extends TestCase{
 		$this->assertFalse($res);
 	}
 	
+	//test de la fonction de connection
 	public function testConnect()
 	{
 		//Variables
@@ -30,16 +31,19 @@ class Test extends TestCase{
 		$this->assertTrue($res);
 	}
 	
+	//test de la fonction de déconnection
 	public function testDisconnect(){
 		$this->assertTrue(disconnect());
 	}
 
+	//test de la fonction administrateur
 	public function testAdmin(){
 		$lvl = 3;
 
 		$this->assertTrue(isAdmin($lvl));
 	}
 
+	//test de la fonction getJSON
 	public function testGetJSON(){
 		$file = "/home/etud/alquesseve/public_html/devweb/agenda/db/users.json";
 
