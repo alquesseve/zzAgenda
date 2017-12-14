@@ -116,7 +116,7 @@ function manageConnect($data){
 function checkChar($ch){
 	//error code
 	$res= "LOGIN_CHECKCHAR_FAILED";
-	if(count($ch) <= 16 && preg_match ( "$^[a-zA-Z0-9_]{3,16}$" , $ch )){
+	if(strlen($ch) <= 16 && preg_match ( "$^[a-zA-Z0-9_]{3,16}$" , $ch )){
 		$res= NULL;
 	}
 	return $res;
