@@ -70,6 +70,7 @@
 					
 					//Get the action performed					
 					$action = secure($_GET['action'], 'add');
+					$id = (int) secure($_GET['id']);
 
 					switch($action)
 					{
@@ -84,8 +85,7 @@
 							}					
 						break;
 						default :  //Delete						
-							if(isset($_POST['post_del'])){
-								$id = (int) secure($_GET['id']);						
+							if(isset($_POST['post_del'])){						
 								deleteConf($id);
 							}
 						break; 
@@ -103,6 +103,7 @@
 			case "users":
 				if(authorisation($_SESSION['lvl'], 'users')){
 					$action = secure($_GET['action'], 'add');
+					$id = (int) secure($_GET['id']);
 
 					switch($action)
 					{
@@ -117,8 +118,7 @@
 							}					
 						break;
 						default :  //Delete						
-							if(isset($_POST['post_del_user'])){
-								$id = (int) secure($_GET['id']);						
+							if(isset($_POST['post_del_user'])){						
 								deleteConf($id, USERS);
 							}
 						break; 

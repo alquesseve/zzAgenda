@@ -178,6 +178,7 @@ function addConf($data){
 	}
 	return $callback;
 }
+
 //Add a user based on $data received from a form
 function addUser($data){
 	$username = secure($data['username']);
@@ -231,8 +232,39 @@ function loadConf($id, $file=CONFERENCES)
 }
 //Edit a conf specified by $id, $data contain the new entity
 function editConf($id, $data){
-	deleteConf($id);
-	$callback = addConf($data);
+	$confs=getJSON(CONFERENCES);
+	$index=searchIndex($confs,$id);
+
+	$title = secure($data['title']);
+	//No use of secure function to avoid htmlspecialchars()
+	$description = (isset($data['description']))? $data['description'] : NULL;
+	$place = secure($data['place']);
+	$speaker = secure($data['speaker']);
+	$hour = secure($data['hour']);
+	$date = secure($data['date']);
+	$callback = "DATA_CHARCHECK_FAILED";
+	//If the fields are OK	
+	if(!checkChar($title) && !checkChar($place) && !checkChar($speaker)){
+		$when = Date ($date . " ". $hour);
+		$confs[$index]= array(
+			"id" => $id,
+			"titre" => $title,
+			"datetime" => $when,
+			"lieu" => $place,
+			"speaker" => $speaker,
+			"description" => $description
+		);
+
+		usort($confs, 'compareConfDate');
+		export($confs, CONFERENCES);
+		
+		$callback="";
+	}
+	return $callback;
+
+
+
+
 }
 //Delete an entity (default, a conference)
 function deleteConf($id, $file=CONFERENCES){
@@ -244,22 +276,20 @@ function deleteConf($id, $file=CONFERENCES){
 }
 //Edit a user
 function editUser($id, $data){
-	deleteConf($id, USERS);
 	
 	$username = secure($data['username']);
 	$password = secure($data['password']);
 	$level = secure($data['level']);
 	if(!checkChar($username)){
 		$users = getJSON(USERS);
-		$id = getId($users);
+		$index = searchIndex($users,$id);
 	
-		$newUser= array(
+		$users[$index]= array(
 			"id" => $id,
 			"username" => $username,
 			"password" => $password,
 			"level" => $level
 		);
-		array_push($users,$newUser);
 		export($users, USERS);
 		
 		$callback="";
