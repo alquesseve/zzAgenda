@@ -45,4 +45,6 @@ define("NO_TAG", "Inexistant");
 define("BAN_TAG", "Banni");
 define("MEMBER_TAG", "Membre");
 define("ADMIN_TAG", "Administrateur");
+define("NOVIEW_TAG", "Impossible de voir du contenu");
+define("PREVIEW", "Retour");
 ?>

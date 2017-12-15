@@ -9,7 +9,7 @@
 	}
 	
 	$lvl = (isset($_SESSION['lvl']))? $_SESSION['lvl'] : 0;
-	$admin = isAdmin($lvl)? '<a href="index.php?page=admin">'.ADMIN_BUTTON.'</a>' : NULL;
+	$admin = isAdmin($lvl)? '<div class="col-lg-4"><h4><a href="index.php?page=admin">'.ADMIN_BUTTON.'</a></h4><div class="hline-w"></div></div>' : NULL;
  ?>
  
 <div id="footerwrap">
@@ -18,12 +18,9 @@
  		<div class="col-lg-4">
 			<h4><?=HOME?></h4>
  			<div class="hline-w"></div>
- 		</div>
- 		<div class="col-lg-4">
- 			<h4><?=$admin?></h4>
- 			<div class="hline-w"></div>
- 		</div>
- 		<div class="col-lg-4">
+ 		</div>	
+ 			<?=$admin?>	
+ 	<div class="col-lg-4">
  			<h4><?=$button?></h4>
  			<div class="hline-w"></div>
  		</div>

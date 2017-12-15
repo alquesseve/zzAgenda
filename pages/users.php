@@ -56,6 +56,7 @@
 					</div>
 				</div>
 			</div>';
+			echo "<div class='container mtb'><button class='center btn btn-theme'><a href='index.php?page=admin'>".PREVIEW."</a></button></div>";
 		}else{
 			$title = ($action)? $titles[$action] : $titles[0];
 			echo'<div id="blue" '.$errorsign.'>
@@ -68,8 +69,8 @@
 				</div>
 			</div>';
 		}
-		//To avoid a display bug
-		 if(!isset($_POST['post_user']) || $errorsign){
+		 
+		if(!isset($_POST['post_user']) || $errorsign){
 ?>	
 
 
@@ -88,8 +89,10 @@
 				</div>
 				<div class="form-group">
 					<label for="level" class="sr-only"><?=LEVEL?></label>
+					<p id="leveldesc">2= <?=MEMBER_TAG?> ; 3= <?=ADMIN_TAG?> ; 0-1= <?=NOVIEW_TAG?></p>
 					<input type="number" name="level" id="level" class="form-control" <?= $placeholder['level']?> step="1" min="0" max="3" required>
 				</div>
+				<button class="center btn btn-theme" ><a href="index.php?page=admin"><?=PREVIEW?></a></button>
 				<button type="submit" name="post_user" class="btn btn-theme"><?=SUBMIT?></button>
 			</form>
 		</div>
@@ -111,13 +114,15 @@
 		</div><?php
 
 	if(isset($_POST['post_del_user'])){
-			echo "<p>".CONFIRM_DEL_U."</p>";
+			echo "<div class='container mtb'><p>".CONFIRM_DEL_U."</p>
+			<button class='center btn btn-theme'><a href='index.php?page=admin'>".PREVIEW."</a></button></div>";
 		}else{		
 		?>
 		
 
-		<form class="form-signin" action="" method="post">
-			<input type="submit" name= "post_del_user" value="<?=DEL_BUTTON?>" />
+		<form class="form-signin container mtb" action="" method="post">
+			<button class="center btn btn-theme" ><a href="index.php?page=admin"><?=PREVIEW?></a></button>
+			<input type="submit" name= "post_del_user" class="center btn btn-theme" value="<?=DEL_BUTTON?>" />
 		</form>
 		<?php
 	}}

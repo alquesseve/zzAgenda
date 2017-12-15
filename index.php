@@ -13,19 +13,20 @@
 	if(($lang && file_exists($filename)))
 	{
 		//use it		
-		$_SESSION['lang'] = $lang;		
+		setcookie("lang", $lang);		
 		require($filename);
 	}
 	else
 	{
 		//if a language is set in current session	
-		if(isset($_SESSION['lang']) && !empty($_SESSION['lang'])){
-			require("db/".$_SESSION['lang'].".php");
+		$_COOKIE['lang'] = secure($_COOKIE['lang']);
+		if(isset($_COOKIE['lang']) && !empty($_COOKIE['lang'])){
+			require("db/".$_COOKIE['lang'].".php");
 		}
 		else{
 			//default language = french		
-			$_SESSION['lang'] = 'fr';
-			require("db/".$_SESSION['lang'].".php");
+			setcookie("lang", 'fr');	
+			require("db/".$_COOKIE['lang'].".php");
 		}
 	}
 

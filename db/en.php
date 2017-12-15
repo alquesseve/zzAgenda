@@ -45,4 +45,6 @@ define("NO_TAG", "No account");
 define("BAN_TAG", "Banned");
 define("MEMBER_TAG", "Member");
 define("ADMIN_TAG", "Admin");
+define("NOVIEW_TAG", "Unable to view any page");
+define("PREVIEW", "Preview");
 ?>
