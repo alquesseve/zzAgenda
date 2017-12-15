@@ -64,9 +64,10 @@
 
 		//if a conf has been posted
 		if(isset($_POST['post_conf'])){
-		echo'
-				<p>'.(isset($callback) && $callback == "")? CONFIRM_EDIT_ADD : DATA_CHARCHECK_FAILED.'</p>
-			';
+			$msg = (isset($callback) && $callback == "")? CONFIRM_EDIT_ADD : DATA_CHARCHECK_FAILED;
+			echo'
+				<div class="container mtb"><p>'.$msg.'</p>
+			<button class="center btn btn-theme"><a href="index.php?page=admin">'.PREVIEW.'</a></button></div>';
 		}else{
 ?>	
 
@@ -120,6 +121,7 @@
 					</div>	
 					<input id="desc" name="description" type="hidden" value=""/> 					
 				</div>
+				<button class="center btn btn-theme" ><a href="index.php?page=admin"><?=PREVIEW?></a></button>
 				<button type="submit" onclick="copyDesc()" name="post_conf" class="btn btn-theme"><?=SUBMIT?></button>
 			</form>
 		</div> <!--COL-LG-8 -->
@@ -130,11 +132,13 @@
 		}
 	}else{ //if the action is Delete
 		if(isset($_POST['post_del'])){
-			echo "<p>".CONFIRM_DEL."</p>";
+			echo "<div class='container mtb'><p>".CONFIRM_DEL."</p>
+			<button class='center btn btn-theme'><a href='index.php?page=admin'>".PREVIEW."</a></button></div>";
 		}else{		
 		?>
-		<form class="form-signin" action="" method="post">
-			<input type="submit" name= "post_del" value="<?=DEL_BUTTON?>" />
+		<form class="form-signin container mtb" action="" method="post">
+			<button class="center btn btn-theme" ><a href="index.php?page=admin"><?=PREVIEW?></a></button>
+			<input type="submit" name= "post_del"  class="center btn btn-theme" value="<?=DEL_BUTTON?>" />
 		</form>
 		<?php
 	}}

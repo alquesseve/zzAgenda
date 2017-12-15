@@ -10,6 +10,7 @@
 	$lvl = (isset($_SESSION['lvl']))? $_SESSION['lvl'] : 0;
 	$session= isset($_SESSION['id'])? '<a disabled>'.CONNECTED_AS.' : '.$_SESSION['id'].'</a>' : NULL;
 	$admin = isAdmin($lvl)? '<a href="index.php?page=admin">'.ADMIN_BUTTON.'</a>' : NULL;	
+	$title = isset($title)? $title : HOME;
 	$langues= array("English" => "en", "Français" => "fr");
 ?>
 
@@ -21,13 +22,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="">
 	<meta name="author" content="">
-	<link rel="shortcut icon" href="./styles/assets/ico/favicon.ico">
 
-	<title><? if(isset($title)){
-		echo $title;}
-		else
-			{echo "Home";}
-	?></title>
+	<title><?= $title ?></title>
 
 	<!-- Bootstrap core CSS -->
 	<link href="./styles/assets/css/bootstrap.css" rel="stylesheet">
